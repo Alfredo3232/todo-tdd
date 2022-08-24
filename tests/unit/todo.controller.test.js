@@ -5,19 +5,35 @@ const httpMocks = require("node-mocks-http");
 const newTodo = require('../mock-data/new-todo.json');
 
 TodoModel.create = jest.fn();
+TodoModel.find = jest.fn();
 
 let req, res, next;
 beforeEach(() => {
     req = httpMocks.createRequest();
     res = httpMocks.createResponse();
     next = jest.fn();
-})
+});
+
+describe("TodoController.getTodos", () => {
+    it("should have a getTodos function", () => {
+        expect(typeof TodoController.getTodos).toBe("function");
+    });
+    it("should call TodoModel.find({})", async () => {
+        await TodoController.getTodos(req, res, next);
+        expect(TodoModel.find).toHaveBeenCalledWith({});
+    });
+    it("should return response with status 200 and all todos", async () => {
+        await TodoController.getTodos(req, res, next);
+        expect(res.statusCode).toBe(200);
+        expect(res._isEndCalled()).toBeTruthy();
+    })
+});
 
 describe("TodoController.createTodo", () => {
 
     beforeEach(() => {
         req.body = newTodo;
-    })
+    });
 
     it("should have a createTodo function", () => {
         expect(typeof TodoController.createTodo).toBe("function");
