@@ -28,7 +28,12 @@ describe("TodoController.getTodoById", () => {
         expect(typeof TodoController.getTodoById).toBe("function");
     });
     it("should call TodoModel.findById with route parameters", async () => {
-        req.params.todoId = "5d5ecb5a6e598605f06cb945";
+        // req.params.todoId = "5d5ecb5a6e598605f06cb945";
+        let req = {
+            params: {
+                todoId: "5d5ecb5a6e598605f06cb945"
+            }
+        }
         await TodoController.getTodoById(req, res, next);
         expect(TodoModel.findById).toBeCalledWith("5d5ecb5a6e598605f06cb945");
     });
