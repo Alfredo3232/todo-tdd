@@ -18,7 +18,9 @@ describe(endpointUrl, () => {
         firstTodo = response.body[0];
     })
     test("GET by Id" + endpointUrl + ":todoId", async () => {
-        const response = await request(app).get(endpointUrl + firstTodo._id);
+        let pathUrl = endpointUrl + "/" +  firstTodo._id;
+        console.log("pathUrl", pathUrl);
+        const response = await request(app).get(pathUrl);
 
         expect(response.statusCode).toBe(200);
         expect(response.body.title).toBe(firstTodo.title);
