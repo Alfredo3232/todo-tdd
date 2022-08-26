@@ -52,5 +52,18 @@ describe(endpointUrl, () => {
         expect(res.statusCode).toBe(200);
         expect(res.body.title).toBe(testData.title);
         expect(res.body.done).toBe(testData.done)
+    });
+    it("HTTP DELETE", async () => {
+        const testData = { title: "Make intergration test for DELETE", done: true }
+        const res = await request(app).delete(endpointUrl + "/" + newTodoId).send();
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body.title).toBe(testData.title);
+        expect(res.body.done).toBe(testData.done)
+    })
+    it("HTTP DELETE 404", async () => {
+        const res = await request(app).delete(endpointUrl + "/" + "5d5fff416bef3c07ecf11f77").send();
+
+        expect(res.statusCode).toBe(404);
     })
 });
